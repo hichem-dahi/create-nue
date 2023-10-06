@@ -1,38 +1,60 @@
-
-<!--
-  Small library of client-side reactive components
-
-  https://nuejs.org/docs/nuejs/reactive-components.html
--->
-
-<a @name="dialog-opener" class="dialog-opener" @click="open">
-  <img loading="lazy" src="img/settings.svg" class="icon">
-  <script>
-    open() {
-      const key = this.root.getAttribute('key')
-      const dialog = window[key]
-      if (dialog) dialog.showModal()
-    }
-  </script>
-</a>
-
-<dialog @name="theme-selector">
-  <h2>Select theme</h2>
-
-  <section class="theme-options">
-    <label :for="el, i in themes" :style="background-color: #{el.color}" class="theme">
-      <input name="theme" type="radio" :checked="i === checkedIndex" @change="change(el, $event, i)">
-      <h4>{ el.name }</h4>
-    </label>
-  </section>
+<script>
+  var contactsGlobal = [{
+    firstname: 'hichem',
+    lastname: 'dahi',
+    gender: 'male'
+  },
+  {
+    firstname: 'jessie',
+    lastname: 'james',
+    gender: 'male'
+  }]
+</script>
+<div @name="contacts">
+  <input label="firstname" type="text" :value="contactInput.firstname" 
+    @change="contactInput.firstname = $event.target.value">
+  <!--<add-contact :callback="addContact"></add-contact>-->
+  <input label="lastname" type="text" :value="contactInput.lastname"
+    @change="contactInput.lastname = $event.target.value">
+  <input label="gender" type="text" :value="contactInput.gender"
+    @change="contactInput.gender = $event.target.value">
+  <!--<add-contact :callback="addContact"></add-contact>-->
+  <button @click="addContact">Add contact</button>
+  <div>{ contactInput.firstname }</div>
 
   <script>
-    checkedIndex = 0
-    change(el, e, i) {
-      this.checkedIndex = i 
-      document.body.className = el.class || el.name.toLowerCase()
-      themes.close()
+    contactInput = {
+      firstname: 'john',
+      lastname: 'doe',
+      gender: 'male'
     }
+    contacts = contactsGlobal
   </script>
+</div>
 
-</dialog>
+<div @name="add-contact">
+  <input label="firstname" type="text" :value="contact.firstname" 
+    @change="contact.firstname = $event.target.value">
+  <input label="lastname" type="text" :value="contact.lastname"
+    @change="contact.lastname = $event.target.value">
+  <input label="gender" type="text" :value="contact.gender"
+    @change="contact.gender = $event.target.value">
+  <button @click="callback(contact)">Add contact</button>
+  <script>
+    contact = {
+      firstname: '',
+      lastname: '',
+      gender: ''
+    }
+
+  </script>
+</div>
+
+<div @name="card">
+  <div>{ contact.firstname }</div>
+  <div>{ contact.lastname }</div>
+  <div>{ contact.gender }</div>
+  <hr>
+  <script>
+  </script>
+</div>
